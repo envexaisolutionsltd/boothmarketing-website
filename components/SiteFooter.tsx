@@ -1,25 +1,3 @@
 import Link from 'next/link'
 
-export default function SiteFooter() {
-  return (
-    <footer className="border-t border-white/[0.06] bg-[#090a0b]">
-      <div className="mx-auto grid w-[min(1160px,calc(100%-28px))] gap-7 py-8 sm:grid-cols-[1.2fr_0.8fr] sm:items-end">
-        <div>
-          <img src="/booth-marketing-logo.png" alt="Booth Marketing" className="w-[138px] object-contain" />
-          <p className="mt-2 max-w-md text-[11px] leading-5 text-[#707177]">Conversion-focused websites and landing pages for established businesses.</p>
-        </div>
-        <div className="sm:text-right">
-          <div className="flex flex-wrap gap-x-5 gap-y-2 sm:justify-end">
-            <Link href="/websites" className="text-[11px] text-[#7b7c82] hover:text-white">Websites</Link>
-            <Link href="/how-it-works" className="text-[11px] text-[#7b7c82] hover:text-white">How It Works</Link>
-            <Link href="/about" className="text-[11px] text-[#7b7c82] hover:text-white">About</Link>
-            <Link href="/privacy" className="text-[11px] text-[#7b7c82] hover:text-white">Privacy</Link>
-            <Link href="/terms" className="text-[11px] text-[#7b7c82] hover:text-white">Terms</Link>
-            <Link href="/website-audit" className="text-[11px] text-[#7b7c82] hover:text-white">Website Audit</Link>
-          </div>
-          <p className="mt-3 text-[10.5px] text-[#5f6066]">© {new Date().getFullYear()} Booth Marketing. All rights reserved.</p>
-        </div>
-      </div>
-    </footer>
-  )
-}
+export default function SiteFooter(){return <footer className="border-t border-white/[0.06] bg-[#08090a]"><div className="mx-auto grid w-[min(1160px,calc(100%-28px))] gap-8 py-9 md:grid-cols-[1.05fr_.85fr_1.1fr]"><div><img src="/booth-marketing-logo.png" alt="Booth Marketing" className="w-[138px] object-contain"/><p className="mt-4 text-[13px] font-semibold text-[#d6d6d5]">Websites for Commercial Insurance Brokers.</p><p className="mt-2 max-w-sm text-[11px] leading-5 text-[#73747a]">Built to strengthen referrals, communicate expertise and create better broker conversations.</p></div><nav className="grid grid-cols-2 gap-x-5 gap-y-2.5 self-start text-[11px] text-[#7b7c82]"><Link href="/websites" className="hover:text-white">Broker Websites</Link><Link href="/work" className="hover:text-white">Selected Work</Link><Link href="/work/northstead-commercial-risk" className="hover:text-white">Northstead Concept</Link><Link href="/how-it-works" className="hover:text-white">How It Works</Link><Link href="/about" className="hover:text-white">About</Link><Link href="/website-audit" className="hover:text-white">Website Audit</Link><Link href="/privacy" className="hover:text-white">Privacy</Link><Link href="/cookies" className="hover:text-white">Cookies</Link></nav><div className="rounded-[16px] border border-white/[0.08] bg-[#0d0f10] p-5"><p className="text-[17px] font-semibold tracking-[-.025em]">Has your brokerage outgrown its website?</p><p className="mt-2 text-[11px] leading-5 text-[#7f8086]">Start with what you already have.</p><Link href="/website-audit" className="mt-4 inline-flex min-h-[44px] items-center rounded-lg bg-[#efe3cf] px-4 text-[11px] font-semibold text-[#151515]">Request Brokerage Website Audit</Link></div></div><div className="border-t border-white/[0.06]"><div className="mx-auto flex w-[min(1160px,calc(100%-28px))] flex-col gap-2 py-4 text-[10px] text-[#5f6066] sm:flex-row sm:items-center sm:justify-between"><p>© 2026 Booth Marketing. All rights reserved.</p><div className="flex gap-4"><Link href="/privacy" className="hover:text-white">Privacy</Link><Link href="/cookies" className="hover:text-white">Cookies</Link></div></div></div></footer>}

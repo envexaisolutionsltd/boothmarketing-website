@@ -1,16 +1,3 @@
 import type { Metadata } from 'next'
-
-export const metadata: Metadata = {
-  title: 'Website Conversion Audit | Booth Marketing',
-  description: 'Find out where your current website is losing trust, clarity or action. Booth Marketing reviews the buyer journey before recommending a redesign.',
-  alternates: { canonical: '/website-audit' },
-  openGraph: {
-    title: 'Website Conversion Audit | Booth Marketing',
-    description: 'Find out where your current website is losing trust, clarity or action before deciding whether a redesign is justified.',
-    url: '/website-audit',
-  },
-}
-
-export default function Layout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return children
-}
+export const metadata:Metadata={title:'Commercial Insurance Brokerage Website Audit | Booth Marketing',description:'A diagnostic website audit for established commercial insurance brokerages covering positioning, referral validation, sector expertise, broker visibility, conversion, mobile and SEO preservation.',alternates:{canonical:'/website-audit'},openGraph:{title:'Commercial Insurance Brokerage Website Audit | Booth Marketing',description:'Find out whether your brokerage website should be kept, improved or rebuilt.',url:'/website-audit'}}
+export default function Layout({children}:{children:React.ReactNode}){return children}
