@@ -8,6 +8,20 @@ body { margin: 0; min-width: 320px; background: #020617; font-family: Inter, ui-
 * { box-sizing: border-box; }
 button, a { -webkit-tap-highlight-color: transparent; }
 
+/* Keep the exact existing rose artwork visible on desktop while using a production-safe asset path. */
+@media (min-width: 1180px) {
+  div:has(> img[alt="Red rose"]) {
+    background-image: url('/booth-rose-hero.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+  }
+
+  div:has(> img[alt="Red rose"]) > img[alt="Red rose"] {
+    opacity: 0;
+  }
+}
+
 /* Keep homepage outcome rows as number + full-width content on narrow screens. */
 @media (max-width: 639px) {
   [class~="grid-cols-[32px_1fr]"][class~="sm:grid-cols-[46px_160px_1fr]"] {
