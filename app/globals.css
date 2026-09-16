@@ -2,41 +2,46 @@
 @tailwind components;
 @tailwind utilities;
 
-:root { color-scheme: dark; }
-html { scroll-behavior: smooth; background: #101010; overflow-x: hidden; }
-body { margin: 0; min-width: 320px; background: #101010; color: #f3f3f3; font-family: Inter, Geist, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; text-rendering: optimizeLegibility; overflow-x: hidden; }
+html { scroll-behavior: smooth; }
+body { margin: 0; min-width: 320px; font-family: Inter, Geist, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; text-rendering: optimizeLegibility; }
 * { box-sizing: border-box; }
-img,video,svg { max-width: 100%; }
 button,a { -webkit-tap-highlight-color: transparent; }
 
-/* Booth public architectural system. Public components opt into this scope; admin keeps its own component styling. */
+/* Booth public site only. Do not leak redesign rules into /admin. */
 .booth-public {
   --booth-canvas:#101010;
-  --booth-carbon:#080808;
-  --booth-chalk:#f3f3f3;
-  --booth-smoke:#9c9c9c;
-  --booth-ash:#c1c1c1;
-  --booth-line:#242424;
-  --booth-iron:#474747;
-  --booth-red:#a51f2d;
-  --booth-red-soft:#7b1722;
+  --booth-depth:#080808;
+  --booth-text:#f3f3f3;
+  --booth-muted:#9c9c9c;
+  --booth-border:#242424;
+  --booth-border-strong:#474747;
+  --booth-red:#d92f3c;
+  --booth-red-muted:#a51f2d;
   --booth-cream:#efe3cf;
+  min-width:320px;
   background:var(--booth-canvas);
-  color:var(--booth-chalk);
+  color:var(--booth-text);
 }
-.booth-public .booth-display { font-weight:400; letter-spacing:-.045em; text-wrap:balance; }
-.booth-public .booth-kicker { color:var(--booth-smoke); font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace; font-size:10px; font-weight:400; letter-spacing:.14em; text-transform:uppercase; }
-.booth-public .booth-copy { color:var(--booth-smoke); }
-.booth-public .booth-rule { border-color:var(--booth-line); }
-.booth-public .booth-primary { min-height:46px; border-radius:9999px; background:#fff; color:#101010; padding:0 20px; font-size:12px; font-weight:500; letter-spacing:.06em; text-transform:uppercase; }
-.booth-public .booth-secondary { min-height:46px; border:1px solid #474747; border-radius:8px; color:#f3f3f3; padding:0 20px; font-size:12px; font-weight:500; letter-spacing:.04em; text-transform:uppercase; }
-.booth-public .booth-grid { border:1px solid var(--booth-line); }
-.booth-public :focus-visible { outline:2px solid var(--booth-cream); outline-offset:3px; }
+.booth-public .booth-container { width:min(1200px,calc(100% - 36px)); margin-inline:auto; }
+.booth-public .booth-section { padding-block:64px; }
+.booth-public .booth-display { font-family:Inter,Geist,ui-sans-serif,system-ui,sans-serif; font-weight:400; letter-spacing:-.035em; text-wrap:balance; }
+.booth-public .booth-kicker { color:#858585; font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace; font-size:9px; font-weight:400; letter-spacing:.14em; line-height:1.5; text-transform:uppercase; }
+.booth-public .booth-copy { color:var(--booth-muted); }
+.booth-public .booth-rule { border-color:var(--booth-border); }
+.booth-public .booth-primary { min-height:48px; border:1px solid #fff; border-radius:9999px; background:#fff; color:#101010; padding:0 20px; font-size:12px; font-weight:500; }
+.booth-public .booth-secondary { min-height:48px; border:1px solid #555; border-radius:8px; background:transparent; color:#f3f3f3; padding:0 20px; font-size:12px; font-weight:500; }
+.booth-public img { height:auto; }
 
-@media (max-width:639px){
-  .booth-public .booth-mobile-stack { width:100%; justify-content:center; }
+@media (max-width:639px) {
+  .booth-public .booth-container { width:min(100% - 32px,1200px); }
+  .booth-public .booth-section { padding-block:56px; }
+  .booth-public .booth-mobile-stack { width:100%; }
+  .booth-public .booth-mobile-heading { font-size:40px !important; line-height:.99 !important; letter-spacing:-.04em !important; }
 }
-@media (prefers-reduced-motion:reduce){
-  html{scroll-behavior:auto}
-  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+@media (min-width:640px) { .booth-public .booth-section { padding-block:72px; } }
+@media (min-width:1024px) { .booth-public .booth-section { padding-block:96px; } }
+
+@media (prefers-reduced-motion:reduce) {
+  html { scroll-behavior:auto; }
+  *,*::before,*::after { animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important; }
 }
