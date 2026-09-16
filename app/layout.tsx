@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import './globals.css'
 import WebMCPTools from '@/components/WebMCPTools'
+import FunctionalityNotice from '@/components/FunctionalityNotice'
 import { boothMarketingPublic } from '@/lib/public-company'
 
 const SITE_URL = 'https://www.boothmarketing.co.uk'
@@ -61,6 +62,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     <html lang="en">
       <body>
         {children}
+        <FunctionalityNotice />
         <WebMCPTools />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }} />
