@@ -12,7 +12,6 @@ export default function AuditForm() {
     setMessage('')
 
     const form = new FormData(event.currentTarget)
-
     const payload = Object.fromEntries(form.entries())
 
     const response = await fetch('/api/leads', {
@@ -22,7 +21,7 @@ export default function AuditForm() {
     })
 
     if (response.ok) {
-      setMessage('Thanks — your audit request has been received.')
+      setMessage('Thanks. Your audit request has been received.')
       event.currentTarget.reset()
     } else {
       setMessage('Something went wrong. Please try again.')
