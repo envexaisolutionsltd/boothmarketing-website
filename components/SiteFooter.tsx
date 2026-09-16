@@ -1,25 +1,3 @@
 import Link from 'next/link'
 
-export default function SiteFooter() {
-  return (
-    <footer className="border-t border-white/[0.06] bg-[#090a0b]">
-      <div className="mx-auto grid w-[min(1160px,calc(100%-28px))] gap-7 py-8 sm:grid-cols-[1.2fr_0.8fr] sm:items-end">
-        <div>
-          <img src="/booth-marketing-logo.png" alt="Booth Marketing" className="w-[138px] object-contain" />
-          <p className="mt-2 max-w-md text-[11px] leading-5 text-[#707177]">Conversion-focused websites and landing pages for established businesses.</p>
-        </div>
-        <div className="sm:text-right">
-          <div className="flex flex-wrap gap-x-5 gap-y-2 sm:justify-end">
-            <Link href="/websites" className="text-[11px] text-[#7b7c82] hover:text-white">Websites</Link>
-            <Link href="/how-it-works" className="text-[11px] text-[#7b7c82] hover:text-white">How It Works</Link>
-            <Link href="/about" className="text-[11px] text-[#7b7c82] hover:text-white">About</Link>
-            <Link href="/privacy" className="text-[11px] text-[#7b7c82] hover:text-white">Privacy</Link>
-            <Link href="/terms" className="text-[11px] text-[#7b7c82] hover:text-white">Terms</Link>
-            <Link href="/website-audit" className="text-[11px] text-[#7b7c82] hover:text-white">Website Audit</Link>
-          </div>
-          <p className="mt-3 text-[10.5px] text-[#5f6066]">© {new Date().getFullYear()} Booth Marketing. All rights reserved.</p>
-        </div>
-      </div>
-    </footer>
-  )
-}
+export default function SiteFooter(){return <footer className="border-t border-[#dedbd4] bg-white text-[#1d1c1a]"><div className="mx-auto w-[min(1160px,calc(100%-32px))] py-12 sm:py-16"><p className="max-w-[820px] font-serif text-[clamp(32px,7vw,58px)] font-normal leading-[1.02] tracking-[-.045em]">Your brokerage already earns trust offline. <span className="text-[#77716b]">Your website should reinforce it online.</span></p><div className="mt-10 grid gap-8 border-t border-[#dedbd4] pt-7 md:grid-cols-[1fr_auto] md:items-end"><div><img src="/booth-marketing-logo.png" alt="Booth Marketing" className="w-[142px] object-contain"/><p className="mt-3 max-w-md text-[12px] leading-6 text-[#706c67]">Conversion-focused websites for established commercial insurance brokerages.</p><Link href="/website-audit" className="mt-5 inline-flex min-h-[44px] items-center rounded-lg border border-[#a51f2d] px-4 text-[12px] font-semibold text-[#7b1722]">Request Website Audit</Link></div><div className="md:text-right"><div className="flex flex-wrap gap-x-5 gap-y-3 md:justify-end">{[['Broker Websites','/websites'],['Work','/work'],['How It Works','/how-it-works'],['About','/about'],['Privacy','/privacy'],['Terms','/terms']].map(([label,href])=><Link key={href} href={href} className="text-[12px] text-[#625e59] hover:text-[#a51f2d]">{label}</Link>)}</div><p className="mt-5 text-[11px] text-[#8b8680]">© {new Date().getFullYear()} Booth Marketing. All rights reserved.</p></div></div></div></footer>}
