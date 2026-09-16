@@ -2,41 +2,41 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  color-scheme: light;
-  --booth-paper: #fefffc;
-  --booth-surface: #ffffff;
-  --booth-linen: #f7f5ef;
-  --booth-ink: #1d1c1a;
-  --booth-graphite: #34312e;
-  --booth-muted: #706c67;
-  --booth-border: #dedbd4;
-  --booth-red: #a51f2d;
-  --booth-red-dark: #6e111d;
-  --booth-cream: #efe3cf;
-  --booth-dark: #171615;
-}
-html { scroll-behavior: smooth; background: var(--booth-paper); overflow-x: hidden; }
-body { margin: 0; min-width: 320px; background: var(--booth-paper); color: var(--booth-ink); font-family: Inter, Geist, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; text-rendering: optimizeLegibility; overflow-x: hidden; }
+:root { color-scheme: dark; }
+html { scroll-behavior: smooth; background: #101010; overflow-x: hidden; }
+body { margin: 0; min-width: 320px; background: #101010; color: #f3f3f3; font-family: Inter, Geist, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; text-rendering: optimizeLegibility; overflow-x: hidden; }
 * { box-sizing: border-box; }
 img,video,svg { max-width: 100%; }
 button,a { -webkit-tap-highlight-color: transparent; }
 
-/* Public editorial system. Kept class-scoped so /admin retains its operational UI. */
-.booth-editorial { background: var(--booth-paper); color: var(--booth-ink); }
-.booth-editorial .booth-display { font-family: Georgia, 'Times New Roman', serif; font-weight: 400; letter-spacing: -.035em; text-wrap: balance; }
-.booth-editorial .booth-kicker { color: var(--booth-red-dark); font-size: 11px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; }
-.booth-editorial .booth-copy { color: var(--booth-muted); }
-.booth-editorial .booth-rule { border-color: var(--booth-border); }
-.booth-editorial .booth-card { background: var(--booth-surface); border: 1px solid var(--booth-border); border-radius: 16px; }
-.booth-editorial .booth-button { min-height: 46px; border: 1px solid var(--booth-red); border-radius: 8px; color: var(--booth-red-dark); background: transparent; }
-.booth-editorial .booth-button-dark { min-height: 46px; border: 1px solid var(--booth-dark); border-radius: 8px; color: #fff; background: var(--booth-dark); }
-
-@media (max-width: 639px) {
-  .booth-editorial .booth-mobile-stack { width: 100%; justify-content: center; }
+/* Booth public architectural system. Public components opt into this scope; admin keeps its own component styling. */
+.booth-public {
+  --booth-canvas:#101010;
+  --booth-carbon:#080808;
+  --booth-chalk:#f3f3f3;
+  --booth-smoke:#9c9c9c;
+  --booth-ash:#c1c1c1;
+  --booth-line:#242424;
+  --booth-iron:#474747;
+  --booth-red:#a51f2d;
+  --booth-red-soft:#7b1722;
+  --booth-cream:#efe3cf;
+  background:var(--booth-canvas);
+  color:var(--booth-chalk);
 }
+.booth-public .booth-display { font-weight:400; letter-spacing:-.045em; text-wrap:balance; }
+.booth-public .booth-kicker { color:var(--booth-smoke); font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace; font-size:10px; font-weight:400; letter-spacing:.14em; text-transform:uppercase; }
+.booth-public .booth-copy { color:var(--booth-smoke); }
+.booth-public .booth-rule { border-color:var(--booth-line); }
+.booth-public .booth-primary { min-height:46px; border-radius:9999px; background:#fff; color:#101010; padding:0 20px; font-size:12px; font-weight:500; letter-spacing:.06em; text-transform:uppercase; }
+.booth-public .booth-secondary { min-height:46px; border:1px solid #474747; border-radius:8px; color:#f3f3f3; padding:0 20px; font-size:12px; font-weight:500; letter-spacing:.04em; text-transform:uppercase; }
+.booth-public .booth-grid { border:1px solid var(--booth-line); }
+.booth-public :focus-visible { outline:2px solid var(--booth-cream); outline-offset:3px; }
 
-@media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
-  *,*::before,*::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+@media (max-width:639px){
+  .booth-public .booth-mobile-stack { width:100%; justify-content:center; }
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
 }
