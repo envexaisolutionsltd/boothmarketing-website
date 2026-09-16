@@ -1,12 +1,12 @@
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'About Booth Marketing | Commercial Insurance Broker Websites',
-  description: 'Why Booth Marketing has chosen established commercial insurance brokers as the primary market for its website strategy, design and development offer.',
+  title: 'About Booth Marketing | Websites & Automation',
+  description: 'Booth Marketing builds conversion-focused websites and AI automation systems for established businesses.',
   alternates: { canonical: '/about' },
   openGraph: {
-    title: 'About Booth Marketing | Commercial Insurance Broker Websites',
-    description: 'Website strategy, positioning, design and development built around how commercial insurance relationships begin.',
+    title: 'About Booth Marketing | Websites & Automation',
+    description: 'Conversion-focused websites and AI automation systems built around established businesses.',
     url: '/about',
   },
 }

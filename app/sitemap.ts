@@ -1,14 +1,15 @@
 import type { MetadataRoute } from 'next'
-const base='https://www.boothmarketing.co.uk'
-const updated=new Date('2026-09-14T00:00:00.000Z')
+import { publicUrls } from '@/lib/public-urls'
+const core=new Date('2026-09-09T00:00:00.000Z')
 export default function sitemap():MetadataRoute.Sitemap{return [
-{url:`${base}/`,lastModified:updated,changeFrequency:'weekly',priority:1},
-{url:`${base}/websites`,lastModified:updated,changeFrequency:'monthly',priority:.95},
-{url:`${base}/website-audit`,lastModified:updated,changeFrequency:'monthly',priority:.95},
-{url:`${base}/work`,lastModified:updated,changeFrequency:'monthly',priority:.85},
-{url:`${base}/work/northstead-commercial-risk`,lastModified:updated,changeFrequency:'monthly',priority:.9},
-{url:`${base}/how-it-works`,lastModified:updated,changeFrequency:'monthly',priority:.8},
-{url:`${base}/about`,lastModified:updated,changeFrequency:'monthly',priority:.65},
-{url:`${base}/privacy`,lastModified:updated,changeFrequency:'yearly',priority:.2},
-{url:`${base}/cookies`,lastModified:updated,changeFrequency:'yearly',priority:.2},
-{url:`${base}/terms`,lastModified:updated,changeFrequency:'yearly',priority:.2}]}
+{url:publicUrls.home,lastModified:core,changeFrequency:'weekly',priority:1},
+{url:publicUrls.websites,lastModified:core,changeFrequency:'monthly',priority:.9},
+{url:publicUrls.websiteAudit,lastModified:core,changeFrequency:'monthly',priority:.95},
+{url:publicUrls.automation,lastModified:core,changeFrequency:'monthly',priority:.75},
+{url:publicUrls.automationAudit,lastModified:core,changeFrequency:'monthly',priority:.7},
+{url:publicUrls.howItWorks,lastModified:core,changeFrequency:'monthly',priority:.8},
+{url:publicUrls.about,lastModified:core,changeFrequency:'monthly',priority:.6},
+{url:publicUrls.agentInfo,lastModified:core,changeFrequency:'monthly',priority:.7},
+{url:publicUrls.llms,lastModified:core,changeFrequency:'monthly',priority:.7},
+{url:publicUrls.privacy,lastModified:core,changeFrequency:'yearly',priority:.2},
+{url:publicUrls.terms,lastModified:core,changeFrequency:'yearly',priority:.2}]}

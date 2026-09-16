@@ -1,3 +1,16 @@
 import type { Metadata } from 'next'
-export const metadata:Metadata={title:'Commercial Insurance Broker Websites | Booth Marketing',description:'Website design for established UK commercial insurance brokers, built around positioning, sector expertise, referral validation, broker visibility and better commercial conversations.',alternates:{canonical:'/websites'},openGraph:{title:'Commercial Insurance Broker Websites | Booth Marketing',description:'Conversion-focused website design for established commercial insurance brokers.',url:'/websites'}}
-export default function Layout({children}:{children:React.ReactNode}){return children}
+
+export const metadata: Metadata = {
+  title: 'Conversion-Focused Websites | Booth Marketing',
+  description: 'Websites for established businesses designed around trust, positioning, mobile experience and action in an AI-assisted buying environment.',
+  alternates: { canonical: '/websites' },
+  openGraph: {
+    title: 'Conversion-Focused Websites | Booth Marketing',
+    description: 'Websites designed around trust, positioning, mobile experience and action in an AI-assisted buying environment.',
+    url: '/websites',
+  },
+}
+
+export default function Layout({ children }: Readonly<{ children: React.ReactNode }>) {
+  return children
+}

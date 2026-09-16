@@ -1,13 +1,71 @@
-import type { Metadata, Viewport } from 'next'
+import type { Metadata } from 'next'
 import './globals.css'
 import WebMCPTools from '@/components/WebMCPTools'
+import { boothMarketingPublic } from '@/lib/public-company'
 
-const SITE_URL='https://www.boothmarketing.co.uk'
+const SITE_URL = 'https://www.boothmarketing.co.uk'
 
-export const viewport:Viewport={width:'device-width',initialScale:1,maximumScale:5,viewportFit:'cover'}
+export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
+  title: 'Booth Marketing | Conversion-Focused Websites for Established Businesses',
+  description: 'Booth Marketing builds conversion-focused websites and landing pages for established businesses, designed for faster trust, clearer positioning and stronger action in an AI-assisted buying environment.',
+  alternates: { canonical: '/' },
+  openGraph: {
+    title: 'Booth Marketing | Conversion-Focused Websites for Established Businesses',
+    description: 'Conversion-focused websites and landing pages built for faster trust, clearer positioning and stronger action.',
+    url: SITE_URL,
+    siteName: 'Booth Marketing',
+    type: 'website',
+    images: [{ url: '/booth-marketing-logo.png', alt: 'Booth Marketing' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Booth Marketing | Conversion-Focused Websites for Established Businesses',
+    description: 'Conversion-focused websites and landing pages built for faster trust, clearer positioning and stronger action.',
+    images: ['/booth-marketing-logo.png'],
+  },
+  icons: {
+    icon: '/booth-marketing-logo.png',
+    shortcut: '/booth-marketing-logo.png',
+    apple: '/booth-marketing-logo.png',
+  },
+}
 
-export const metadata:Metadata={metadataBase:new URL(SITE_URL),title:'Web Design for Commercial Insurance Brokers | Booth Marketing',description:'Booth Marketing builds conversion-focused websites for established UK commercial insurance brokers, designed to strengthen referrals, communicate expertise and create better broker conversations.',alternates:{canonical:'/'},openGraph:{title:'Web Design for Commercial Insurance Brokers | Booth Marketing',description:'Conversion-focused websites for established commercial insurance brokers.',url:SITE_URL,siteName:'Booth Marketing',type:'website',images:[{url:'/booth-marketing-logo.png',alt:'Booth Marketing'}]},twitter:{card:'summary_large_image',title:'Web Design for Commercial Insurance Brokers | Booth Marketing',description:'Conversion-focused websites for established commercial insurance brokers.',images:['/booth-marketing-logo.png']},icons:{icon:'/booth-marketing-logo.png',shortcut:'/booth-marketing-logo.png',apple:'/booth-marketing-logo.png'}}
-const organizationSchema={'@context':'https://schema.org','@type':'Organization',name:'Booth Marketing',url:SITE_URL,logo:`${SITE_URL}/booth-marketing-logo.png`,description:'Website strategy, design and development for established commercial insurance brokers.'}
-const websiteSchema={'@context':'https://schema.org','@type':'WebSite',name:'Booth Marketing',url:SITE_URL}
-const serviceSchema={'@context':'https://schema.org','@type':'Service',name:'Commercial Insurance Broker Website Design',provider:{'@type':'Organization',name:'Booth Marketing',url:SITE_URL},serviceType:['Website Design for Commercial Insurance Brokers','Insurance Broker Web Design UK','Website Strategy','Website Conversion Audits','Mobile-First Web Development'],areaServed:'United Kingdom'}
-export default function RootLayout({children}:{children:React.ReactNode}){return <html lang="en"><body>{children}<WebMCPTools/><script type="application/ld+json" dangerouslySetInnerHTML={{__html:JSON.stringify(organizationSchema)}}/><script type="application/ld+json" dangerouslySetInnerHTML={{__html:JSON.stringify(websiteSchema)}}/><script type="application/ld+json" dangerouslySetInnerHTML={{__html:JSON.stringify(serviceSchema)}}/></body></html>}
+const organizationSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: boothMarketingPublic.companyName,
+  url: SITE_URL,
+  logo: `${SITE_URL}/booth-marketing-logo.png`,
+  description: boothMarketingPublic.whatWeDo,
+}
+
+const websiteSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: boothMarketingPublic.companyName,
+  url: SITE_URL,
+}
+
+const websiteServiceSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: 'Conversion-Focused Website Design and Development',
+  provider: { '@type': 'Organization', name: boothMarketingPublic.companyName, url: SITE_URL },
+  serviceType: ['Conversion-Focused Websites', 'Website Strategy', 'Landing Pages', 'Website Conversion Audits', 'Mobile-First Web Development'],
+  areaServed: 'Worldwide',
+}
+
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+  return (
+    <html lang="en">
+      <body>
+        {children}
+        <WebMCPTools />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteServiceSchema) }} />
+      </body>
+    </html>
+  )
+}
