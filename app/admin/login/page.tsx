@@ -17,15 +17,21 @@ export default function AdminLoginPage() {
       const response = await fetch('/api/admin/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
+        credentials: 'same-origin',
+        cache: 'no-store',
         body: JSON.stringify({ password }),
       })
+      const data = await response.json().catch(() => ({})) as { error?: string }
       if (!response.ok) {
-        setError('That password was not accepted. Please try again.')
+        if (response.status === 503) setError('Admin login is not configured on this deployment. Add ADMIN_PASSWORD to the production environment and redeploy.')
+        else if (response.status === 429) setError('Too many login attempts. Please wait a few minutes and try again.')
+        else if (response.status === 401) setError('That password was not accepted. Please try again.')
+        else setError(data.error || 'We could not sign you in. Please try again.')
         return
       }
-      window.location.href = '/admin'
+      window.location.replace('/admin')
     } catch {
-      setError('We could not sign you in. Please try again.')
+      setError('We could not sign you in. Please check your connection and try again.')
     } finally {
       setLoading(false)
     }
@@ -56,9 +62,9 @@ export default function AdminLoginPage() {
                 {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
               </button>
             </div>
-            {error && <p className="mt-3 rounded-lg border border-[#d92f3c]/15 bg-[#190f11] px-3 py-2.5 text-[11px] leading-5 text-[#d1a3a8]">{error}</p>}
+            {error && <p role="alert" className="mt-3 rounded-lg border border-[#d92f3c]/15 bg-[#190f11] px-3 py-2.5 text-[11px] leading-5 text-[#d1a3a8]">{error}</p>}
             <button disabled={loading || !password} className="mt-5 flex min-h-[52px] w-full items-center justify-center rounded-xl border border-[#efe3cf] bg-[#efe3cf] px-5 text-[13px] font-semibold text-[#151515] transition hover:bg-[#f6ead7] disabled:cursor-wait disabled:opacity-60">
-              {loading ? 'Signing in…' : 'Enter dashboard'}
+              {loading ? 'Signing in...' : 'Enter dashboard'}
               {!loading && <ArrowRight className="ml-2.5 h-4 w-4" />}
             </button>
           </form>
