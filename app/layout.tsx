@@ -1,7 +1,6 @@
 import type { Metadata } from 'next'
 import './globals.css'
 import WebMCPTools from '@/components/WebMCPTools'
-import FunctionalityNotice from '@/components/FunctionalityNotice'
 import { boothMarketingPublic } from '@/lib/public-company'
 
 const SITE_URL = 'https://www.boothmarketing.co.uk'
@@ -17,4 +16,4 @@ export const metadata: Metadata = {
 const organizationSchema={'@context':'https://schema.org','@type':'Organization',name:boothMarketingPublic.companyName,url:SITE_URL,logo:`${SITE_URL}/booth-marketing-logo.png`,description:DESCRIPTION}
 const websiteSchema={'@context':'https://schema.org','@type':'WebSite',name:boothMarketingPublic.companyName,url:SITE_URL}
 const serviceSchema={'@context':'https://schema.org','@type':'Service',name:'AI Automation for Business',provider:{'@type':'Organization',name:boothMarketingPublic.companyName,url:SITE_URL},serviceType:['AI Automation','Business Process Automation','AI Workflow Automation','AI Automation Prototyping'],areaServed:'United Kingdom'}
-export default function RootLayout({children}:Readonly<{children:React.ReactNode}>){return <html lang="en"><body>{children}<FunctionalityNotice/><WebMCPTools/><script type="application/ld+json" dangerouslySetInnerHTML={{__html:JSON.stringify(organizationSchema)}}/><script type="application/ld+json" dangerouslySetInnerHTML={{__html:JSON.stringify(websiteSchema)}}/><script type="application/ld+json" dangerouslySetInnerHTML={{__html:JSON.stringify(serviceSchema)}}/></body></html>}
+export default function RootLayout({children}:Readonly<{children:React.ReactNode}>){return <html lang="en"><body>{children}<WebMCPTools/><script type="application/ld+json" dangerouslySetInnerHTML={{__html:JSON.stringify(organizationSchema)}}/><script type="application/ld+json" dangerouslySetInnerHTML={{__html:JSON.stringify(websiteSchema)}}/><script type="application/ld+json" dangerouslySetInnerHTML={{__html:JSON.stringify(serviceSchema)}}/></body></html>}
