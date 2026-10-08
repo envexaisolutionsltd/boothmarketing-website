@@ -45,3 +45,65 @@ button,a { -webkit-tap-highlight-color: transparent; }
 @media (min-width:768px) { .booth-public .booth-container,.booth-header-container { padding-inline:32px; } .booth-public .booth-section { padding-block:80px; } .booth-public .booth-mobile-heading { font-size:62px; line-height:.97; letter-spacing:-.035em; } .booth-public .booth-mobile-copy { font-size:17px; line-height:1.75; } }
 @media (min-width:1024px) { .booth-public .booth-section { padding-block:96px; } .booth-public .booth-mobile-heading { font-size:76px; } }
 @media (prefers-reduced-motion:reduce) { html { scroll-behavior:auto; } *,*::before,*::after { animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important; } }
+
+/* Responsive hero art and mobile composition */
+.booth-public .booth-hero-rose { display:none; }
+@media (max-width:767px) {
+  .booth-public .booth-section { padding-block:44px; }
+  .booth-public .booth-mobile-heading { font-size:clamp(2.45rem,11.3vw,3rem); line-height:.98; letter-spacing:-.05em; }
+  .booth-public .booth-mobile-copy { font-size:15px; line-height:1.6; }
+  .booth-public .booth-primary { width:100%; padding-inline:18px; text-align:center; }
+  .booth-public .booth-secondary { width:100%; }
+  .booth-public .booth-panel { border-radius:7px; }
+  .booth-public textarea,.booth-public input,.booth-public select { font-size:16px; }
+}
+@media (max-width:374px) {
+  .booth-public .booth-container,.booth-header-container { padding-inline:16px; }
+  .booth-public .booth-mobile-heading { font-size:2.35rem; }
+  .booth-public .booth-section { padding-block:40px; }
+}
+@media (min-width:1180px) {
+  .booth-public .booth-hero-rose {
+    display:block;
+    position:absolute;
+    z-index:10;
+    width:500px;
+    height:650px;
+    right:-72px;
+    top:47%;
+    transform:translateY(-50%);
+    pointer-events:none;
+    isolation:isolate;
+  }
+  .booth-public .booth-hero-rose::after {
+    content:'';
+    position:absolute;
+    inset:7% 0 4% 14%;
+    z-index:-1;
+    background:radial-gradient(circle at 52% 38%,rgba(132,7,21,.22),rgba(40,0,5,.08) 43%,transparent 70%);
+    filter:blur(24px);
+  }
+  .booth-public .booth-hero-rose-glow {
+    position:absolute;
+    inset:17% 8% 15% 18%;
+    border-radius:50%;
+    background:rgba(117,6,19,.2);
+    filter:blur(72px);
+  }
+  .booth-public .booth-hero-rose-image {
+    position:relative;
+    z-index:1;
+    display:block;
+    width:100%;
+    height:100%;
+    max-width:none;
+    object-fit:contain;
+    opacity:.96;
+    filter:contrast(1.14) saturate(1.22) brightness(.83) drop-shadow(0 30px 38px rgba(0,0,0,.72));
+    transform:scale(1.12);
+    transform-origin:center;
+  }
+}
+@media (min-width:1440px) {
+  .booth-public .booth-hero-rose { width:550px; height:700px; right:-54px; top:46%; }
+}
