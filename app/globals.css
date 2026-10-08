@@ -107,3 +107,23 @@ button,a { -webkit-tap-highlight-color: transparent; }
 @media (min-width:1440px) {
   .booth-public .booth-hero-rose { width:550px; height:700px; right:-54px; top:46%; }
 }
+
+
+/* Custom 3D 404 */
+.booth-404-object{display:flex;align-items:center;justify-content:center;gap:.03em;font-size:clamp(8rem,20vw,17rem);font-weight:700;line-height:.72;letter-spacing:-.13em;filter:drop-shadow(0 34px 38px rgba(0,0,0,.72));animation:booth404Float 7s ease-in-out infinite}
+.booth-404-digit{position:relative;display:block;color:#171717;-webkit-text-stroke:1px rgba(255,255,255,.16);text-shadow:-1px -1px 0 rgba(255,255,255,.08),5px 6px 0 #090909,10px 12px 18px rgba(0,0,0,.72);transform:rotateY(13deg) rotateX(-5deg)}
+.booth-404-four-last{transform:rotateY(-13deg) rotateX(-5deg)}
+.booth-404-zero{position:relative;display:block;width:.72em;height:.72em;margin-inline:.035em;border-radius:50%;background:radial-gradient(circle at 38% 30%,#5b1119 0,#2c090d 20%,#130607 44%,#080808 68%);box-shadow:inset 14px 12px 30px rgba(217,47,60,.14),inset -18px -22px 28px #000,0 0 0 1px rgba(217,47,60,.2),0 30px 55px rgba(0,0,0,.75);transform:rotateX(64deg) rotateZ(-13deg);transform-style:preserve-3d}
+.booth-404-zero::before,.booth-404-zero::after{content:'';position:absolute;border-radius:50%;inset:10%;border:1px solid rgba(255,255,255,.08)}
+.booth-404-zero::after{inset:29%;background:#050505;border-color:rgba(217,47,60,.15);box-shadow:inset 0 0 28px #000}
+.booth-404-zero i{position:absolute;z-index:2;width:9%;height:9%;left:69%;top:17%;border-radius:50%;background:#d92f3c;box-shadow:0 0 24px rgba(217,47,60,.75);transform:translateZ(22px)}
+.booth-404-orbit{box-shadow:inset 0 0 70px rgba(255,255,255,.018);transform-style:preserve-3d;animation:booth404Orbit 18s linear infinite}
+.booth-404-orbit::after{content:'';position:absolute;left:12%;top:9%;width:7px;height:7px;border-radius:50%;background:#d92f3c;box-shadow:0 0 18px rgba(217,47,60,.8)}
+.booth-404-orbit-reverse{animation:booth404OrbitReverse 14s linear infinite;transform:translate(-50%,-50%) rotateX(67deg)}
+.booth-404-particle{position:absolute;width:5px;height:5px;border-radius:50%;background:#777;box-shadow:0 0 14px rgba(255,255,255,.12);animation:booth404Particle 6s ease-in-out infinite}
+.booth-404-particle-a{left:22%;top:24%}.booth-404-particle-b{right:17%;top:36%;animation-delay:-2s}.booth-404-particle-c{right:28%;bottom:19%;width:3px;height:3px;animation-delay:-4s}
+@keyframes booth404Float{0%,100%{transform:translate(-50%,-50%) rotateX(1deg) rotateY(-3deg) translateY(0)}50%{transform:translate(-50%,-50%) rotateX(-2deg) rotateY(4deg) translateY(-13px)}}
+@keyframes booth404Orbit{from{transform:translate(-50%,-50%) rotateX(72deg) rotateZ(0)}to{transform:translate(-50%,-50%) rotateX(72deg) rotateZ(360deg)}}
+@keyframes booth404OrbitReverse{from{transform:translate(-50%,-50%) rotateX(67deg) rotateZ(360deg)}to{transform:translate(-50%,-50%) rotateX(67deg) rotateZ(0)}}
+@keyframes booth404Particle{0%,100%{transform:translate3d(0,0,0);opacity:.3}50%{transform:translate3d(9px,-17px,28px);opacity:.9}}
+@media(max-width:639px){.booth-404-object{font-size:9.2rem}.booth-404-zero{margin-inline:.06em}}
