@@ -60,3 +60,5 @@
 .automation-landing__form-error{padding:16px;margin:16px 0;border:1px solid #ff8990;border-radius:10px;color:#ffced0}
 .automation-landing__form-button:disabled{opacity:.65;cursor:wait}
 .automation-landing__honeypot{position:absolute!important;width:1px!important;height:1px!important;overflow:hidden!important;clip-path:inset(50%)!important;white-space:nowrap!important}
+
+.automation-landing__fieldset{border:0;padding:0;margin:0;min-width:0}
