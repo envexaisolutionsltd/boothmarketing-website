@@ -1,0 +1,3 @@
+import type { Metadata } from 'next'
+export const metadata:Metadata={title:"Business Workflow Automation | Booth Marketing",description:"Explore practical opportunities to automate repetitive work across sales, customer service, operations and administration.",alternates:{canonical:"/what-we-automate"},openGraph:{title:"Business Workflow Automation | Booth Marketing",description:"Explore practical opportunities to automate repetitive work across sales, customer service, operations and administration.",url:"/what-we-automate"}}
+export default function Layout({children}:{children:React.ReactNode}){return children}

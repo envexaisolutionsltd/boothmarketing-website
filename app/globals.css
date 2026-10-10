@@ -127,3 +127,16 @@ button,a { -webkit-tap-highlight-color: transparent; }
 @keyframes booth404OrbitReverse{from{transform:translate(-50%,-50%) rotateX(67deg) rotateZ(360deg)}to{transform:translate(-50%,-50%) rotateX(67deg) rotateZ(0)}}
 @keyframes booth404Particle{0%,100%{transform:translate3d(0,0,0);opacity:.3}50%{transform:translate3d(9px,-17px,28px);opacity:.9}}
 @media(max-width:639px){.booth-404-object{font-size:9.2rem}.booth-404-zero{margin-inline:.06em}}
+
+/* V3.1 responsive accessibility refinements */
+.booth-public { overflow-wrap: anywhere; }
+.booth-public :where(button, a, input, select, textarea):focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+.booth-public :where(input[type="range"]) { min-height: 44px; touch-action: pan-y; }
+.booth-public :where(input[type="checkbox"]) { accent-color: #d92f3c; }
+@media (max-width: 767px) {
+ .booth-public .booth-container { padding-inline: max(16px,env(safe-area-inset-left)) max(16px,env(safe-area-inset-right)); }
+ .booth-public .booth-section { padding-block: 48px; }
+ .booth-public :where(h1,h2,h3) { overflow-wrap: break-word; }
+ .booth-public :where(input,select,textarea) { max-width:100%; }
+}
+@media (min-width:768px) and (max-width:1023px) { .booth-public .booth-section { padding-block:72px; } }

@@ -1,0 +1,3 @@
+import type { Metadata } from 'next'
+export const metadata:Metadata={title:"Request an Automation Audit | Booth Marketing",description:"Tell Booth Marketing where your business loses time. Request a practical review of manual processes, disconnected tools and potential automation opportunities.",alternates:{canonical:"/automation-audit"},openGraph:{title:"Request an Automation Audit | Booth Marketing",description:"Tell Booth Marketing where your business loses time. Request a practical review of manual processes, disconnected tools and potential automation opportunities.",url:"/automation-audit"}}
+export default function Layout({children}:{children:React.ReactNode}){return children}
