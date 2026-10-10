@@ -1,5 +1,5 @@
 'use client'
-import { useRef, useState, type ChangeEvent, type FormEvent } from 'react'
+import { useEffect, useRef, useState, type ChangeEvent, type FormEvent } from 'react'
 import { emptyAuditValues, validateAudit, type AuditErrors, type AuditField, type AuditValues } from '@/lib/automation-landing/validation'
 
 const fields: { key: AuditField; label: string; required: boolean; type?: string; autocomplete?: string }[] = [
@@ -10,7 +10,9 @@ const fields: { key: AuditField; label: string; required: boolean; type?: string
   { key: 'challenge', label: 'Biggest operational challenge', required: true },
 ]
 
-export default function AuditDemoForm() {
+export default function AutomationAuditForm() {
+  const [hydrated, setHydrated] = useState(false)
+  useEffect(() => { setHydrated(true) }, [])
   const [values, setValues] = useState<AuditValues>({ ...emptyAuditValues })
   const [errors, setErrors] = useState<AuditErrors>({})
   const [attempted, setAttempted] = useState(false)
@@ -76,7 +78,8 @@ export default function AuditDemoForm() {
 
   if (status === 'success') return <div ref={statusRef} tabIndex={-1} role="status" aria-live="polite" className="automation-landing__form-success"><h3>Request received</h3><p>Your Automation Audit request has been received. Booth Marketing can review your enquiry and contact you using the details supplied.</p><button type="button" onClick={() => { setStatus('idle'); setAttempted(false) }} className="automation-landing__form-button">Send Another Request</button></div>
 
-  return <form noValidate onSubmit={submit} className="automation-landing__form" aria-busy={pending}>
+  return <form noValidate method="post" onSubmit={submit} className="automation-landing__form" aria-busy={pending}>
+    <fieldset disabled={!hydrated || pending} className="automation-landing__fieldset">
     <div className="automation-landing__form-grid">{fields.map(field => {
       const id = `audit-form-${field.key}`
       const errorId = `${id}-error`
@@ -89,7 +92,9 @@ export default function AuditDemoForm() {
     {consentError && <p id="audit-consent-error" className="automation-landing__error">Please agree before submitting your request.</p>}
     <p className="automation-landing__privacy">Do not include passwords, customer records or confidential business information.</p>
     {status === 'error' && <div ref={statusRef} tabIndex={-1} role="alert" className="automation-landing__form-error">{serverError} Your entries have been preserved so you can try again.</div>}
-    <button type="submit" disabled={pending} className="automation-landing__form-button">{pending ? 'Submitting…' : 'Request an Automation Audit'}</button>
+    <button type="submit" disabled={!hydrated || pending} className="automation-landing__form-button">{pending ? 'Submitting…' : 'Request an Automation Audit'}</button>
     <p className="automation-landing__microcopy">No payment or commitment. Confirmation appears only after the server accepts your request.</p>
+    </fieldset>
+    <noscript><p className="automation-landing__privacy">JavaScript is required to submit this form. Please enable JavaScript or use the contact details below.</p></noscript>
   </form>
 }
