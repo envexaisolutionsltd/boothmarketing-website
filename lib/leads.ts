@@ -85,6 +85,7 @@ export async function saveLeadIdempotently(lead:Lead,submissionKey:string){
    VALUES(${lead.id},${lead.name},${lead.email},${lead.company},${lead.phone||''},${Boolean(lead.consent)},${lead.industry||''},${lead.teamSize||''},${lead.challenge||''},${lead.status},${lead.enquiryType||'AUTOMATION_AUDIT'},${lead.websiteUrl||''},${lead.createdAt})`
   await tx`INSERT INTO lead_activity(lead_id,activity_type,summary,metadata)
    VALUES(${lead.id},'CREATED','Enquiry received',${JSON.stringify({enquiryType:lead.enquiryType||'AUTOMATION_AUDIT'})}::jsonb)`
+  await tx`INSERT INTO lead_activity(lead_id,activity_type,summary,metadata) VALUES(${lead.id},'AUDIT_SUBMITTED','Persisted submission event',${JSON.stringify({event:'audit_submitted',enquiryType:lead.enquiryType||'AUTOMATION_AUDIT'})}::jsonb)`
   await tx`INSERT INTO lead_notifications(lead_id) VALUES(${lead.id})`
   return {id:lead.id,duplicate:false,conflict:false}
  })
