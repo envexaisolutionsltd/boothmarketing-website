@@ -6,7 +6,7 @@ import { deleteLead, getLeadActivity, getLeadById, updateLead, LeadStatus } from
 
 export const dynamic='force-dynamic'
 export const revalidate=0
-const statuses:LeadStatus[]=['NEW','CONTACTED','QUALIFIED','CALL_BOOKED','CLOSED'];const scores=['','Low','Medium','High','Very High']
+const statuses:LeadStatus[]=['NEW','CONTACTED','QUALIFIED','BOOKED','CLOSED_WON','CLOSED_LOST'];const scores=['','Low','Medium','High','Very High']
 export default async function LeadPage({params}:{params:Promise<{id:string}>}){const {id}=await params;let lead=null;try{lead=await getLeadById(id)}catch{};if(!lead)return <AdminShell section="Leads"><div className="mx-auto max-w-4xl rounded-[18px] border border-white/[.075] bg-[#0d0f10] p-10 text-center"><h1 className="text-xl font-semibold">Lead unavailable</h1><Link href="/admin/leads" className="mt-5 inline-block text-[11px] text-[#d8cbb7]">Back to leads</Link></div></AdminShell>;const activity=await getLeadActivity(id)
  async function save(formData:FormData){'use server';const status=String(formData.get('status')||'') as LeadStatus,opportunityScore=String(formData.get('opportunityScore')||'');if(!statuses.includes(status)||!scores.includes(opportunityScore))return;await updateLead(id,{status,websiteUrl:String(formData.get('websiteUrl')||'').trim().slice(0,500),opportunityScore,notes:String(formData.get('notes')||'').trim().slice(0,6000)});revalidatePath('/admin');revalidatePath('/admin/leads');revalidatePath(`/admin/leads/${id}`)}
  async function remove(){'use server';await deleteLead(id);revalidatePath('/admin');revalidatePath('/admin/leads');redirect('/admin/leads')}
