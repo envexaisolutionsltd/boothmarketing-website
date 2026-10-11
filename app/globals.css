@@ -127,3 +127,30 @@ button,a { -webkit-tap-highlight-color: transparent; }
 @keyframes booth404OrbitReverse{from{transform:translate(-50%,-50%) rotateX(67deg) rotateZ(360deg)}to{transform:translate(-50%,-50%) rotateX(67deg) rotateZ(0)}}
 @keyframes booth404Particle{0%,100%{transform:translate3d(0,0,0);opacity:.3}50%{transform:translate3d(9px,-17px,28px);opacity:.9}}
 @media(max-width:639px){.booth-404-object{font-size:9.2rem}.booth-404-zero{margin-inline:.06em}}
+
+
+/* CSS-only hero phrase rotation, independent of React hydration. */
+.booth-public .booth-rotating-phrase {
+  visibility: hidden;
+  opacity: 0;
+  animation: boothPhraseCycle 20s linear infinite;
+}
+.booth-public .booth-rotating-phrase:first-child {
+  visibility: visible;
+}
+.booth-public .booth-rotating-cursor {
+  animation: boothCursorBlink 1s steps(1,end) infinite;
+}
+@keyframes boothPhraseCycle {
+  0%, 18% { visibility: visible; opacity: 1; }
+  19.9%, 100% { visibility: hidden; opacity: 0; }
+}
+@keyframes boothCursorBlink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .booth-public .booth-rotating-phrase { animation: none !important; visibility: hidden; opacity: 0; }
+  .booth-public .booth-rotating-phrase:first-child { visibility: visible; opacity: 1; }
+  .booth-public .booth-rotating-cursor { animation: none !important; }
+}
