@@ -1,0 +1,2 @@
+import Link from 'next/link'
+export default function LandingHeader() { return <header className="automation-landing__header"><div className="automation-landing__container automation-landing__header-inner"><Link href="/" aria-label="Booth Marketing home" className="automation-landing__brand"><img src="/booth-marketing-logo.png" alt="Booth Marketing" width="156" height="48" /></Link><a href="#automation-audit-form" className="automation-landing__header-link">Request an Automation Audit</a></div></header> }
