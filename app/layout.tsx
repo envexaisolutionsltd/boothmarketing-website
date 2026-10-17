@@ -8,7 +8,7 @@ const TITLE = 'AI Automation Agency UK | Booth Marketing'
 const DESCRIPTION = 'Practical AI automation for established businesses. Booth Marketing identifies repetitive work and bottlenecks, prototypes useful workflows and builds automation around the opportunities worth solving.'
 
 export const metadata: Metadata = {
-  metadataBase: new URL(SITE_URL), title: TITLE, description: DESCRIPTION, alternates: { canonical: '/' },
+  metadataBase: new URL(SITE_URL), title: TITLE, description: DESCRIPTION, 
   openGraph: { title: TITLE, description: DESCRIPTION, url: SITE_URL, siteName: 'Booth Marketing', type: 'website', images: [{ url: '/booth-marketing-logo.png', alt: 'Booth Marketing' }] },
   twitter: { card: 'summary_large_image', title: TITLE, description: DESCRIPTION, images: ['/booth-marketing-logo.png'] },
   icons: { icon: '/booth-marketing-logo.png', shortcut: '/booth-marketing-logo.png', apple: '/booth-marketing-logo.png' },
