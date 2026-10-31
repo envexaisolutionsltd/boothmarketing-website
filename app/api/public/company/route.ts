@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 import { boothMarketingPublic } from '@/lib/public-company'
 
-export const dynamic = 'force-static'
+export const dynamic = 'force-dynamic'
 
 export function GET(request: Request) {
   const isAlpha = new URL(request.url).hostname.toLowerCase() === 'alpha.boothmarketing.co.uk'
