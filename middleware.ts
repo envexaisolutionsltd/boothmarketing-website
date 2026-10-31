@@ -28,11 +28,21 @@ async function validSession(token: string | undefined, secret: string | undefine
 export async function middleware(request: NextRequest) {
   const { pathname, hostname } = request.nextUrl
 
-  if (hostname.toLowerCase() !== 'alpha.boothmarketing.co.uk' && pathname === ALPHA_PAGE) {
+  const isAlpha = hostname.toLowerCase() === 'alpha.boothmarketing.co.uk'
+
+  if (isAlpha && request.method === 'POST' && (pathname === '/api/leads' || pathname === '/api/bookings')) {
+    return NextResponse.json({ error: 'Submissions are disabled on the alpha staging site.' }, { status: 403, headers: { 'X-Robots-Tag': 'noindex, nofollow' } })
+  }
+
+  if (!isAlpha && pathname === ALPHA_PAGE) {
     return new NextResponse('Not found', { status: 404 })
   }
 
-  if (!pathname.startsWith('/admin') || pathname.startsWith('/admin/login')) return NextResponse.next()
+  if (!pathname.startsWith('/admin') || pathname.startsWith('/admin/login')) {
+    const response = NextResponse.next()
+    if (isAlpha) response.headers.set('X-Robots-Tag', 'noindex, nofollow')
+    return response
+  }
 
   const token = request.cookies.get('booth_admin_session')?.value
   const authenticated = await validSession(token, process.env.ADMIN_PASSWORD)
@@ -40,10 +50,13 @@ export async function middleware(request: NextRequest) {
   if (!authenticated) {
     const response = NextResponse.redirect(new URL('/admin/login', request.url))
     response.cookies.delete('booth_admin_session')
+    if (isAlpha) response.headers.set('X-Robots-Tag', 'noindex, nofollow')
     return response
   }
 
-  return NextResponse.next()
+  const response = NextResponse.next()
+  if (isAlpha) response.headers.set('X-Robots-Tag', 'noindex, nofollow')
+  return response
 }
 
 export const config = {
