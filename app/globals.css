@@ -154,3 +154,49 @@ button,a { -webkit-tap-highlight-color: transparent; }
   .booth-public .booth-rotating-phrase:first-child { visibility: visible; opacity: 1; }
   .booth-public .booth-rotating-cursor { animation: none !important; }
 }
+
+
+/* Restrained Liquid Glass accents for the public Booth experience. */
+.booth-public .booth-glass-panel {
+  border-color:rgba(255,255,255,.12);
+  background:linear-gradient(145deg,rgba(255,255,255,.035),rgba(255,255,255,.012) 42%,rgba(255,255,255,.02)),rgba(14,14,14,.96);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.045),0 18px 48px rgba(0,0,0,.18);
+}
+.booth-public .booth-glass-header {
+  border-color:rgba(255,255,255,.09);
+  background:rgba(13,13,13,.82);
+  box-shadow:0 8px 28px rgba(0,0,0,.16);
+  -webkit-backdrop-filter:blur(18px) saturate(125%);
+  backdrop-filter:blur(18px) saturate(125%);
+}
+.booth-public .booth-glass-menu {
+  background:rgba(15,15,15,.94);
+  -webkit-backdrop-filter:blur(20px) saturate(120%);
+  backdrop-filter:blur(20px) saturate(120%);
+}
+.booth-public .booth-primary {
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.8),0 7px 22px rgba(255,255,255,.055);
+  transition:transform .2s ease,box-shadow .2s ease,background-color .2s ease;
+}
+.booth-public .booth-primary:hover {
+  transform:translateY(-1px);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.9),0 10px 28px rgba(255,255,255,.1);
+}
+@supports (backdrop-filter:blur(1px)) {
+  .booth-public .booth-glass-panel {
+    background:linear-gradient(145deg,rgba(255,255,255,.04),rgba(255,255,255,.012) 44%,rgba(255,255,255,.025)),rgba(14,14,14,.86);
+    -webkit-backdrop-filter:blur(14px) saturate(115%);
+    backdrop-filter:blur(14px) saturate(115%);
+  }
+}
+@media (max-width:767px) {
+  .booth-public .booth-glass-panel {
+    background:linear-gradient(145deg,rgba(255,255,255,.03),rgba(255,255,255,.012)),rgba(14,14,14,.94);
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.035);
+  }
+  .booth-public .booth-primary:hover { transform:none; }
+}
+@media (prefers-reduced-motion:reduce) {
+  .booth-public .booth-primary { transition:none; }
+  .booth-public .booth-primary:hover { transform:none; }
+}
