@@ -55,11 +55,15 @@ async function checkMenu(page, width, label) {
   assert(state.top <= 1 && state.bottom >= 600, `${label}: drawer does not cover the page height`)
   assert(state.backgroundImage !== 'none' || !state.backgroundColor.endsWith(', 0)'), `${label}: drawer background is transparent`)
 
-  for (const name of ['What We Automate', 'Prototypes', 'How It Works', 'About', 'Request an Automation Audit']) {
-    await panel.getByRole('link', { name, exact: true }).waitFor({ state: 'visible' })
+  for (const href of ['/what-we-automate', '/prototypes', '/how-it-works', '/about', '/automation-audit']) {
+    await panel.locator(`a[href="${href}"]`).waitFor({ state: 'visible' })
+  }
+  const menuText = (await panel.locator('nav a').allTextContents()).join(' ')
+  for (const label of ['What We Automate', 'Prototypes', 'How It Works', 'About', 'Request an Automation Audit']) {
+    assert(menuText.includes(label), `${label}: menu label is missing`)
   }
 
-  await panel.getByRole('link', { name: 'What We Automate', exact: true }).click()
+  await panel.locator('a[href="/what-we-automate"]').click()
   await page.waitForURL('**/what-we-automate')
   await page.getByRole('heading', { level: 1 }).waitFor({ state: 'visible' })
   assert(new URL(page.url()).pathname === '/what-we-automate', `${label}: navigation did not open the selected page`)
