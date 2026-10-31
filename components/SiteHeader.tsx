@@ -50,7 +50,7 @@ export default function SiteHeader() {
           role="dialog"
           aria-modal="true"
           aria-label="Site navigation"
-          className="booth-glass-menu absolute right-0 top-0 z-10 flex h-[100dvh] w-[75vw] min-w-[270px] max-w-[360px] flex-col border-l border-[#242424] p-5"
+          className="booth-glass-menu absolute right-0 top-0 z-10 flex h-[100dvh] w-[75vw] min-w-[270px] max-w-[360px] flex-col border-l border-[#242424] p-5"\n          style={{\n            borderColor: 'rgba(255,255,255,.18)',\n            background: 'linear-gradient(150deg,rgba(255,255,255,.09),rgba(255,255,255,.018) 52%),rgba(15,15,15,.96)',\n            boxShadow: '-18px 0 56px rgba(0,0,0,.4),inset 1px 0 0 rgba(255,255,255,.1)',\n            WebkitBackdropFilter: 'blur(22px) saturate(135%)',\n            backdropFilter: 'blur(22px) saturate(135%)',\n          }}
         >
           <div className="flex items-center justify-between gap-3 border-b border-[#242424] pb-5">
             <BoothLogo className="w-[118px]" priorityLabel="Booth Marketing home" />
