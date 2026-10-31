@@ -1,11 +1,16 @@
+import { headers } from 'next/headers'
 import type { Metadata } from 'next'
 import { boothMarketingPublic as company } from '@/lib/public-company'
 
-export const metadata: Metadata = {
-  title: 'Booth Marketing | Company & Service Information',
-  description: 'Authoritative public information about Booth Marketing services, ideal customers and how to start an enquiry.',
-  robots: { index: true, follow: true },
-  alternates: { canonical: '/agent-info' },
+export async function generateMetadata(): Promise<Metadata> {
+  const host = (await headers()).get('host')?.split(':')[0].toLowerCase()
+  const isAlpha = host === 'alpha.boothmarketing.co.uk'
+  return {
+    title: 'Booth Marketing | Company & Service Information',
+    description: 'Authoritative public information about Booth Marketing services, ideal customers and how to start an enquiry.',
+    robots: { index: !isAlpha, follow: !isAlpha },
+    alternates: { canonical: '/agent-info' },
+  }
 }
 
 export default function AgentInfoPage() {
