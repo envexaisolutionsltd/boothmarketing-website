@@ -16,6 +16,12 @@ button,a { -webkit-tap-highlight-color: transparent; }
   --booth-border:#212121;
   --booth-border-strong:#474747;
   --booth-red:#d92f3c;
+  --booth-glass-blur-nav:22px;
+  --booth-glass-blur-panel:16px;
+  --booth-glass-tint:rgba(17,17,17,.78);
+  --booth-glass-stroke:rgba(255,255,255,.12);
+  --booth-glass-highlight:rgba(255,255,255,.07);
+  --booth-glass-shadow:0 16px 44px rgba(0,0,0,.24);
   width:100%; max-width:100%; background:var(--booth-canvas); color:var(--booth-text); overflow-x:clip;
 }
 .booth-public .booth-container,.booth-header-container { width:100%; max-width:1200px; margin-inline:auto; padding-inline:20px; }
@@ -156,45 +162,84 @@ button,a { -webkit-tap-highlight-color: transparent; }
 }
 
 
-/* Restrained Liquid Glass accents for the public Booth experience. */
-.booth-public .booth-panel {
-  border-color:rgba(255,255,255,.12);
-  background:linear-gradient(145deg,rgba(255,255,255,.035),rgba(255,255,255,.012) 42%,rgba(255,255,255,.02)),rgba(14,14,14,.96);
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.045),0 18px 48px rgba(0,0,0,.18);
-}
+
+/* Liquid Glass accents, scoped to the public Booth experience on testing. */
 .booth-public .booth-glass-header {
-  border-color:rgba(255,255,255,.09);
-  background:rgba(13,13,13,.82);
-  box-shadow:0 8px 28px rgba(0,0,0,.16);
-  -webkit-backdrop-filter:blur(18px) saturate(125%);
-  backdrop-filter:blur(18px) saturate(125%);
+  border-color:var(--booth-glass-stroke);
+  background:linear-gradient(180deg,rgba(255,255,255,.035),transparent 80%),var(--booth-glass-tint);
+  box-shadow:0 8px 28px rgba(0,0,0,.18),inset 0 1px 0 rgba(255,255,255,.065);
+  -webkit-backdrop-filter:blur(var(--booth-glass-blur-nav)) saturate(125%);
+  backdrop-filter:blur(var(--booth-glass-blur-nav)) saturate(125%);
 }
 .booth-public .booth-glass-menu {
-  background:rgba(15,15,15,.94);
-  -webkit-backdrop-filter:blur(20px) saturate(120%);
-  backdrop-filter:blur(20px) saturate(120%);
+  border-color:var(--booth-glass-stroke);
+  background:linear-gradient(150deg,rgba(255,255,255,.045),transparent 52%),rgba(15,15,15,.94);
+  box-shadow:-18px 0 56px rgba(0,0,0,.34),inset 1px 0 0 rgba(255,255,255,.06);
+  -webkit-backdrop-filter:blur(var(--booth-glass-blur-nav)) saturate(120%);
+  backdrop-filter:blur(var(--booth-glass-blur-nav)) saturate(120%);
+}
+.booth-public .booth-panel {
+  position:relative;
+  border-color:var(--booth-glass-stroke);
+  border-radius:12px;
+  background:linear-gradient(145deg,rgba(255,255,255,.045),rgba(255,255,255,.012) 46%,rgba(217,47,60,.018)),rgba(14,14,14,.94);
+  box-shadow:inset 0 1px 0 var(--booth-glass-highlight),inset 1px 0 0 rgba(255,255,255,.025),var(--booth-glass-shadow);
 }
 .booth-public .booth-primary {
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.8),0 7px 22px rgba(255,255,255,.055);
-  transition:transform .2s ease,box-shadow .2s ease,background-color .2s ease;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.9),0 7px 22px rgba(255,255,255,.07);
+  transition:transform .2s ease,box-shadow .2s ease;
 }
 .booth-public .booth-primary:hover {
   transform:translateY(-1px);
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.9),0 10px 28px rgba(255,255,255,.1);
+  box-shadow:inset 0 1px 0 #fff,0 10px 28px rgba(255,255,255,.13);
+}
+.booth-public .booth-staging-banner {
+  min-height:32px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:6px 18px;
+  border-bottom:1px solid rgba(229,107,117,.28);
+  background:linear-gradient(90deg,rgba(70,14,21,.96),rgba(43,12,17,.96) 50%,rgba(70,14,21,.96));
+  color:#f6dfe1;
+  font-size:10px;
+  font-weight:500;
+  letter-spacing:.035em;
+  text-align:center;
+}
+.booth-public .booth-staging-banner::before {
+  content:'';
+  width:6px;
+  height:6px;
+  flex:none;
+  margin-right:9px;
+  border-radius:50%;
+  background:#e56b75;
+  box-shadow:0 0 10px rgba(229,107,117,.6);
 }
 @supports (backdrop-filter:blur(1px)) {
   .booth-public .booth-panel {
-    background:linear-gradient(145deg,rgba(255,255,255,.04),rgba(255,255,255,.012) 44%,rgba(255,255,255,.025)),rgba(14,14,14,.86);
-    -webkit-backdrop-filter:blur(14px) saturate(115%);
-    backdrop-filter:blur(14px) saturate(115%);
+    background:linear-gradient(145deg,rgba(255,255,255,.052),rgba(255,255,255,.015) 46%,rgba(217,47,60,.022)),rgba(14,14,14,.82);
+    -webkit-backdrop-filter:blur(var(--booth-glass-blur-panel)) saturate(118%);
+    backdrop-filter:blur(var(--booth-glass-blur-panel)) saturate(118%);
   }
 }
 @media (max-width:767px) {
   .booth-public .booth-panel {
-    background:linear-gradient(145deg,rgba(255,255,255,.03),rgba(255,255,255,.012)),rgba(14,14,14,.94);
-    box-shadow:inset 0 1px 0 rgba(255,255,255,.035);
+    border-radius:9px;
+    background:linear-gradient(145deg,rgba(255,255,255,.035),rgba(255,255,255,.012)),rgba(14,14,14,.95);
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.04);
   }
   .booth-public .booth-primary:hover { transform:none; }
+}
+@media (prefers-contrast:more) {
+  .booth-public .booth-glass-header,.booth-public .booth-glass-menu,.booth-public .booth-panel {
+    border-color:#777;
+    background:#101010;
+    -webkit-backdrop-filter:none;
+    backdrop-filter:none;
+    box-shadow:none;
+  }
 }
 @media (prefers-reduced-motion:reduce) {
   .booth-public .booth-primary { transition:none; }
