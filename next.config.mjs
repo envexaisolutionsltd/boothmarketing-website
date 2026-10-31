@@ -4,6 +4,17 @@ const nextConfig={
   images:{
     unoptimized:true
   },
+  async redirects(){
+    return [
+      {source:'/websites',destination:'/what-we-automate',permanent:true},
+      {source:'/website-audit',destination:'/automation-audit',permanent:true},
+      {source:'/automation',destination:'/what-we-automate',permanent:true},
+      {source:'/work',destination:'/prototypes',permanent:true},
+      {source:'/work/northstead-commercial-risk',destination:'/prototypes',permanent:true},
+      {source:'/work/purple-door-leeds',destination:'/prototypes',permanent:true},
+      {source:'/work/graft-haus-gym',destination:'/prototypes',permanent:true},
+    ]
+  },
   async headers(){
     return [{source:'/:path*',headers:[
       {key:'X-Content-Type-Options',value:'nosniff'},

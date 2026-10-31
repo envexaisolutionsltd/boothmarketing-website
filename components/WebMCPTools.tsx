@@ -1,18 +1,212 @@
 'use client'
+
 import { useEffect } from 'react'
 import { boothMarketingPublic as company } from '@/lib/public-company'
 
-type Tool={name:string;title?:string;description:string;inputSchema:Record<string,unknown>;annotations?:{readOnlyHint?:boolean;untrustedContentHint?:boolean;consequentialHint?:boolean};execute:(input:Record<string,unknown>)=>unknown|Promise<unknown>}
-type Context={registerTool:(tool:Tool,options?:{signal?:AbortSignal})=>unknown|Promise<unknown>}
-const str=(v:unknown)=>String(v??'').trim()
-const empty={type:'object',additionalProperties:false,properties:{}}
-function getContext():Context|null{const d=document as Document&{modelContext?:Context};if(d.modelContext?.registerTool)return d.modelContext;const n=navigator as Navigator&{modelContext?:Context};return n.modelContext?.registerTool?n.modelContext:null}
-async function postLead(payload:Record<string,unknown>){const r=await fetch('/api/leads',{method:'POST',headers:{'Content-Type':'application/json','X-Booth-WebMCP':'1'},body:JSON.stringify(payload)});const d=await r.json().catch(()=>({})) as {duplicate?:boolean;error?:string};if(!r.ok)throw new Error(d.error||'The enquiry could not be submitted.');return{success:true,duplicate:Boolean(d.duplicate),message:d.duplicate?'This request was already received recently, so another lead was not created.':'Your request has been received by Booth Marketing.',next_step:'Booth Marketing will review the enquiry and respond using the contact details supplied.'}}
+type Tool = {
+  name: string
+  title: string
+  description: string
+  inputSchema: Record<string, unknown>
+  annotations: { readOnlyHint: boolean; consequentialHint: boolean; untrustedContentHint: boolean }
+  execute: (input: Record<string, unknown>) => unknown | Promise<unknown>
+}
+type Context = { registerTool: (tool: Tool, options?: { signal?: AbortSignal }) => unknown | Promise<unknown> }
+const str = (value: unknown) => String(value ?? '').trim()
+const empty = { type: 'object', additionalProperties: false, properties: {} }
 
-export default function WebMCPTools(){useEffect(()=>{if(process.env.NEXT_PUBLIC_WEBMCP_ENABLED==='false')return;const ctx=getContext();if(!ctx){if(process.env.NODE_ENV!=='production')console.info('[WebMCP] Browser API unavailable; normal website behaviour is unchanged.');return}const ac=new AbortController();const tools:Tool[]=[
-{name:'get_booth_marketing_services',title:'Get Booth Marketing services',description:'Read authoritative public information about Booth Marketing, its current services, ideal customers, problems solved and public calls to action. Read-only. Do not infer prices, guarantees, clients, results or services not returned by this tool.',inputSchema:empty,annotations:{readOnlyHint:true,consequentialHint:false,untrustedContentHint:false},execute:()=>({company_name:company.companyName,what_booth_marketing_does:company.whatWeDo,positioning:company.positioning,buying_journey:company.buyingJourney,primary_services:company.primaryServices,secondary_services:company.secondaryServices,ideal_customer:company.idealCustomer,problems_solved:company.problemsSolved,engagement_note:company.engagementNote,calls_to_action:company.callsToAction})},
-{name:'recommend_booth_marketing_service',title:'Recommend a Booth Marketing service',description:'Recommend the most relevant current Booth Marketing service using only prospect information supplied to this tool. Read-only. This tool does not inspect or audit a website and must never claim that it has.',inputSchema:{type:'object',additionalProperties:false,properties:{business_type:{type:'string',minLength:1,maxLength:120,description:'Prospect business type or industry.'},website_url:{type:'string',maxLength:500,description:'Optional URL for context only; it is not fetched or inspected.'},current_problem:{type:'string',minLength:1,maxLength:800,description:'Current website, conversion or operational problem.'},primary_goal:{type:'string',minLength:1,maxLength:500,description:'Main desired outcome.'},additional_context:{type:'string',maxLength:1000,description:'Optional additional context.'}},required:['business_type','current_problem','primary_goal']},annotations:{readOnlyHint:true,consequentialHint:false,untrustedContentHint:false},execute:(i)=>{const p=`${str(i.current_problem)} ${str(i.primary_goal)} ${str(i.additional_context)}`.toLowerCase();const automation=/automat|manual admin|repetitive|workflow|handoff|duplicate data|rekey|operations/.test(p),landing=/landing|campaign|specific offer|new offer|paid traffic|single page/.test(p),audit=/not sure|unsure|diagnos|audit|what.*wrong|whether.*rebuild|keep.*site/.test(p);if(automation)return{recommended_service:company.secondaryServices[0].name,reason:'The supplied problem is primarily an operational or repetitive-workflow issue, which is the situation Booth Marketing’s secondary practical automation service is intended to assess.',suggested_next_step:'Submit an enquiry describing the workflow and desired outcome so Booth Marketing can determine whether practical automation is appropriate.',limitation:'This is a recommendation from supplied information only. No workflow assessment has taken place.'};const s=landing?company.primaryServices[1]:audit?company.primaryServices[2]:company.primaryServices[0];return{recommended_service:s.name,reason:landing?'The need is focused on a specific offer or campaign, matching Booth Marketing’s landing-page work.':audit?'The business should diagnose the current website before deciding whether targeted improvements or a rebuild are justified.':'The problem concerns website clarity, trust, positioning or conversion, matching Booth Marketing’s conversion-focused website service.',suggested_next_step:'Request a Website Conversion Audit so the actual site can be reviewed before specific changes are recommended.',limitation:'This recommendation is based only on supplied information. No website audit or inspection has been performed.'}}},
-{name:'get_booth_marketing_process',title:'Get Booth Marketing process',description:'Explain the genuine public Booth Marketing website engagement and enquiry journey. Read-only; does not create a lead or make pricing, contractual or delivery commitments.',inputSchema:empty,annotations:{readOnlyHint:true,consequentialHint:false,untrustedContentHint:false},execute:()=>({company_name:company.companyName,website_process:company.process,how_to_start:company.callsToAction,engagement_note:company.engagementNote})},
-{name:'request_website_audit',title:'Request a Website Audit',description:'CONSEQUENTIAL WRITE. Submit a Website Conversion Audit request through Booth Marketing’s existing lead system. Call only after the user explicitly chooses to submit and approves the supplied contact details. Never call merely because the user seems interested. confirmed_by_user must only be true after deliberate confirmation.',inputSchema:{type:'object',additionalProperties:false,properties:{name:{type:'string',minLength:1,maxLength:120},email:{type:'string',minLength:3,maxLength:200},company:{type:'string',minLength:1,maxLength:160},website_url:{type:'string',minLength:1,maxLength:500,description:'Website to review; bare domains are accepted.'},business_type:{type:'string',maxLength:120},primary_problem:{type:'string',maxLength:500},goal:{type:'string',maxLength:500},message:{type:'string',maxLength:1000},confirmed_by_user:{type:'boolean',description:'True only after explicit user confirmation.'}},required:['name','email','company','website_url','confirmed_by_user']},annotations:{readOnlyHint:false,consequentialHint:true,untrustedContentHint:false},execute:async(i)=>{if(i.confirmed_by_user!==true)throw new Error('Explicit user confirmation is required before submitting a website audit request.');return postLead({name:str(i.name),email:str(i.email),company:str(i.company),websiteUrl:str(i.website_url),industry:str(i.business_type),challenge:[str(i.primary_problem),str(i.goal),str(i.message)].filter(Boolean).join(' — '),enquiryType:'WEBSITE_AUDIT',webmcpConfirmed:true})}},
-{name:'submit_booth_marketing_enquiry',title:'Submit Booth Marketing enquiry',description:'CONSEQUENTIAL WRITE. Submit a normal Booth Marketing sales enquiry through the existing lead system. Call only after the user explicitly chooses to contact Booth Marketing and approves the supplied details. confirmed_by_user must only be true after deliberate confirmation.',inputSchema:{type:'object',additionalProperties:false,properties:{name:{type:'string',minLength:1,maxLength:120},email:{type:'string',minLength:3,maxLength:200},company:{type:'string',minLength:1,maxLength:160},website_url:{type:'string',maxLength:500},business_type:{type:'string',maxLength:120},message:{type:'string',minLength:1,maxLength:1500},confirmed_by_user:{type:'boolean',description:'True only after explicit user confirmation.'}},required:['name','email','company','message','confirmed_by_user']},annotations:{readOnlyHint:false,consequentialHint:true,untrustedContentHint:false},execute:async(i)=>{if(i.confirmed_by_user!==true)throw new Error('Explicit user confirmation is required before submitting an enquiry.');return postLead({name:str(i.name),email:str(i.email),company:str(i.company),websiteUrl:str(i.website_url),industry:str(i.business_type),challenge:str(i.message),enquiryType:'CONTACT',webmcpConfirmed:true})}}
-];Promise.allSettled(tools.map(t=>Promise.resolve(ctx.registerTool(t,{signal:ac.signal})))).then(rs=>{if(process.env.NODE_ENV!=='production'){console.info(`[WebMCP] Registered ${rs.filter(r=>r.status==='fulfilled').length}/${tools.length} Booth Marketing tools.`);rs.forEach((r,i)=>{if(r.status==='rejected')console.warn(`[WebMCP] Registration failed for ${tools[i].name}.`)})}});return()=>ac.abort()},[]);return null}
+function getContext(): Context | null {
+  const doc = document as Document & { modelContext?: Context }
+  if (doc.modelContext?.registerTool) return doc.modelContext
+  const nav = navigator as Navigator & { modelContext?: Context }
+  return nav.modelContext?.registerTool ? nav.modelContext : null
+}
+
+async function postLead(payload: Record<string, unknown>) {
+  const response = await fetch('/api/leads', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'X-Booth-WebMCP': '1' },
+    body: JSON.stringify(payload),
+  })
+  const result = await response.json().catch(() => ({})) as { duplicate?: boolean; error?: string }
+  if (!response.ok) throw new Error(result.error || 'The enquiry could not be submitted.')
+  return {
+    success: true,
+    duplicate: Boolean(result.duplicate),
+    message: result.duplicate
+      ? 'This request was already received recently, so another lead was not created.'
+      : 'Your request has been received by Booth Marketing.',
+    next_step: 'Booth Marketing will review the enquiry and respond using the contact details supplied.',
+  }
+}
+
+export default function WebMCPTools() {
+  useEffect(() => {
+    if (process.env.NEXT_PUBLIC_WEBMCP_ENABLED === 'false') return
+    const context = getContext()
+    if (!context) {
+      if (process.env.NODE_ENV !== 'production') console.info('[WebMCP] Browser API unavailable; normal website behaviour is unchanged.')
+      return
+    }
+
+    const controller = new AbortController()
+    const tools: Tool[] = [
+      {
+        name: 'get_booth_marketing_services',
+        title: 'Get Booth Marketing services',
+        description: 'Read current public information about Booth Marketing services, ideal customers, problems solved and calls to action. Read-only. Do not infer prices, guarantees, clients or results.',
+        inputSchema: empty,
+        annotations: { readOnlyHint: true, consequentialHint: false, untrustedContentHint: false },
+        execute: () => ({
+          company_name: company.companyName,
+          what_booth_marketing_does: company.whatWeDo,
+          positioning: company.positioning,
+          buying_journey: company.buyingJourney,
+          primary_services: company.primaryServices,
+          secondary_services: company.secondaryServices,
+          ideal_customer: company.idealCustomer,
+          problems_solved: company.problemsSolved,
+          process: company.process,
+          engagement_note: company.engagementNote,
+          calls_to_action: company.callsToAction,
+        }),
+      },
+      {
+        name: 'recommend_booth_marketing_service',
+        title: 'Recommend a Booth Marketing service',
+        description: 'Recommend a current AI automation service using only information the prospect supplies. Read-only; this tool does not inspect systems or make an operational diagnosis.',
+        inputSchema: {
+          type: 'object',
+          additionalProperties: false,
+          properties: {
+            business_type: { type: 'string', minLength: 1, maxLength: 120 },
+            current_problem: { type: 'string', minLength: 1, maxLength: 800 },
+            primary_goal: { type: 'string', minLength: 1, maxLength: 500 },
+            additional_context: { type: 'string', maxLength: 1000 },
+          },
+          required: ['business_type', 'current_problem', 'primary_goal'],
+        },
+        annotations: { readOnlyHint: true, consequentialHint: false, untrustedContentHint: false },
+        execute: (input) => {
+          const need = `${str(input.current_problem)} ${str(input.primary_goal)} ${str(input.additional_context)}`.toLowerCase()
+          const prototype = /prototype|demonstrat|proof of concept|test an idea/.test(need)
+          const implementation = /implement|connect systems|build|deploy|integrat/.test(need)
+          const service = prototype
+            ? company.primaryServices[1]
+            : implementation
+              ? company.primaryServices[2]
+              : company.primaryServices[0]
+          return {
+            recommended_service: service.name,
+            reason: prototype
+              ? 'The supplied need is to see a proposed workflow demonstrated before a larger implementation.'
+              : implementation
+                ? 'The supplied need is to implement or connect a practical business workflow.'
+                : 'The supplied information points to identifying and prioritising an automation opportunity first.',
+            suggested_next_step: 'Request an Automation Audit so Booth Marketing can understand the process and decide what may be worth exploring.',
+            limitation: 'This recommendation uses only the information supplied. No process, system or workflow has been inspected.',
+          }
+        },
+      },
+      {
+        name: 'get_booth_marketing_process',
+        title: 'Get Booth Marketing process',
+        description: 'Explain the public Booth Marketing diagnosis, prioritisation, prototype, build and improvement process. Read-only and makes no delivery commitments.',
+        inputSchema: empty,
+        annotations: { readOnlyHint: true, consequentialHint: false, untrustedContentHint: false },
+        execute: () => ({
+          company_name: company.companyName,
+          process: company.process,
+          calls_to_action: company.callsToAction,
+          engagement_note: company.engagementNote,
+        }),
+      },
+      {
+        name: 'request_automation_audit',
+        title: 'Request an Automation Audit',
+        description: 'CONSEQUENTIAL WRITE. Submit an Automation Audit enquiry. Call only after the user explicitly chooses to submit, confirms the contact details, and agrees that Booth Marketing may contact them. Set confirmed_by_user and consent_to_contact to true only after that explicit confirmation.',
+        inputSchema: {
+          type: 'object',
+          additionalProperties: false,
+          properties: {
+            name: { type: 'string', minLength: 1, maxLength: 120 },
+            email: { type: 'string', minLength: 3, maxLength: 200 },
+            company: { type: 'string', minLength: 1, maxLength: 160 },
+            business_type: { type: 'string', maxLength: 120 },
+            team_size: { type: 'string', maxLength: 80 },
+            website_url: { type: 'string', maxLength: 500 },
+            message: { type: 'string', minLength: 1, maxLength: 1500 },
+            consent_to_contact: { type: 'boolean', description: 'True only after the user agrees to be contacted about this request.' },
+            confirmed_by_user: { type: 'boolean', description: 'True only after the user explicitly confirms submission of these details.' },
+          },
+          required: ['name', 'email', 'company', 'message', 'consent_to_contact', 'confirmed_by_user'],
+        },
+        annotations: { readOnlyHint: false, consequentialHint: true, untrustedContentHint: false },
+        execute: async (input) => {
+          if (input.confirmed_by_user !== true || input.consent_to_contact !== true) {
+            throw new Error('Explicit submission confirmation and consent to contact are required.')
+          }
+          return postLead({
+            name: str(input.name),
+            email: str(input.email),
+            company: str(input.company),
+            websiteUrl: str(input.website_url),
+            industry: str(input.business_type),
+            teamSize: str(input.team_size),
+            challenge: str(input.message),
+            consent: true,
+            enquiryType: 'AUTOMATION_AUDIT',
+            webmcpConfirmed: true,
+          })
+        },
+      },
+      {
+        name: 'submit_booth_marketing_enquiry',
+        title: 'Submit Booth Marketing enquiry',
+        description: 'CONSEQUENTIAL WRITE. Submit a general enquiry. Call only after the user explicitly chooses to contact Booth Marketing, confirms the contact details and agrees that Booth Marketing may contact them.',
+        inputSchema: {
+          type: 'object',
+          additionalProperties: false,
+          properties: {
+            name: { type: 'string', minLength: 1, maxLength: 120 },
+            email: { type: 'string', minLength: 3, maxLength: 200 },
+            company: { type: 'string', minLength: 1, maxLength: 160 },
+            business_type: { type: 'string', maxLength: 120 },
+            website_url: { type: 'string', maxLength: 500 },
+            message: { type: 'string', minLength: 1, maxLength: 1500 },
+            consent_to_contact: { type: 'boolean' },
+            confirmed_by_user: { type: 'boolean' },
+          },
+          required: ['name', 'email', 'company', 'message', 'consent_to_contact', 'confirmed_by_user'],
+        },
+        annotations: { readOnlyHint: false, consequentialHint: true, untrustedContentHint: false },
+        execute: async (input) => {
+          if (input.confirmed_by_user !== true || input.consent_to_contact !== true) {
+            throw new Error('Explicit submission confirmation and consent to contact are required.')
+          }
+          return postLead({
+            name: str(input.name),
+            email: str(input.email),
+            company: str(input.company),
+            websiteUrl: str(input.website_url),
+            industry: str(input.business_type),
+            challenge: str(input.message),
+            consent: true,
+            enquiryType: 'CONTACT',
+            webmcpConfirmed: true,
+          })
+        },
+      },
+    ]
+
+    Promise.allSettled(tools.map((tool) => Promise.resolve(context.registerTool(tool, { signal: controller.signal }))))
+      .then((results) => {
+        if (process.env.NODE_ENV !== 'production') {
+          console.info(`[WebMCP] Registered ${results.filter((result) => result.status === 'fulfilled').length}/${tools.length} Booth Marketing tools.`)
+        }
+      })
+    return () => controller.abort()
+  }, [])
+
+  return null
+}
