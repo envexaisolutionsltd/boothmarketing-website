@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 
 const encoder = new TextEncoder()
-const ALPHA_HOST = 'alpha.boothmarketing.co.uk'
 const ALPHA_PAGE = '/alpha-preview'
 
 async function validSession(token: string | undefined, secret: string | undefined) {
@@ -29,15 +28,7 @@ async function validSession(token: string | undefined, secret: string | undefine
 export async function middleware(request: NextRequest) {
   const { pathname, hostname } = request.nextUrl
 
-  if (hostname.toLowerCase() === ALPHA_HOST) {
-    if (pathname === ALPHA_PAGE || pathname === '/booth-marketing-logo.png' || pathname === '/favicon.ico') {
-      return NextResponse.next()
-    }
-
-    return NextResponse.rewrite(new URL(ALPHA_PAGE, request.url))
-  }
-
-  if (pathname === ALPHA_PAGE) {
+  if (hostname.toLowerCase() !== 'alpha.boothmarketing.co.uk' && pathname === ALPHA_PAGE) {
     return new NextResponse('Not found', { status: 404 })
   }
 
