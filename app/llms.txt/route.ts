@@ -1,7 +1,7 @@
 import { boothMarketingPublic as company } from '@/lib/public-company'
 import { publicUrls } from '@/lib/public-urls'
 
-export const dynamic = 'force-static'
+export const dynamic = 'force-dynamic'
 
 export function GET() {
   const primary = company.primaryServices.map((service) => `- ${service.name}: ${service.description}`).join('\n')
@@ -47,7 +47,7 @@ export function GET() {
   return new Response(lines.join('\n'), {
     headers: {
       'Content-Type': 'text/plain; charset=utf-8',
-      'Cache-Control': 'public, max-age=3600, s-maxage=86400, stale-while-revalidate=604800',
+      'Cache-Control': 'no-store, max-age=0, must-revalidate',
       'X-Robots-Tag': 'index, follow',
     },
   })
