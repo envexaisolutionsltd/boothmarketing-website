@@ -1,12 +1,12 @@
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'How We Build Conversion-Focused Websites | Booth Marketing',
-  description: 'See how Booth Marketing turns buyer intent, positioning, proof and mobile experience into a clearer website decision path.',
+  title: 'How AI Automation Works | Booth Marketing',
+  description: 'See how Booth Marketing diagnoses, prioritises, prototypes and builds useful AI automation around real business processes.',
   alternates: { canonical: '/how-it-works' },
   openGraph: {
-    title: 'How We Build Conversion-Focused Websites | Booth Marketing',
-    description: 'See how Booth Marketing turns buyer intent, positioning, proof and mobile experience into a clearer website decision path.',
+    title: 'How AI Automation Works | Booth Marketing',
+    description: 'See how Booth Marketing diagnoses, prioritises, prototypes and builds useful AI automation around real business processes.',
     url: '/how-it-works',
   },
 }
