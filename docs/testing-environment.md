@@ -18,4 +18,4 @@ Vercel preview deployments currently receive the project's shared Supabase integ
 
 1. Make and review changes on `testing`.
 2. Check the alpha deployment and its QA results.
-3. Merge the reviewed changes into `main) only when ready for production.
+3. Merge the reviewed changes into `main` only when ready for production.
