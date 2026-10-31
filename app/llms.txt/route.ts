@@ -3,7 +3,8 @@ import { publicUrls } from '@/lib/public-urls'
 
 export const dynamic = 'force-dynamic'
 
-export function GET() {
+export function GET(request: Request) {
+  const isAlpha = new URL(request.url).hostname.toLowerCase() === 'alpha.boothmarketing.co.uk'
   const primary = company.primaryServices.map((service) => `- ${service.name}: ${service.description}`).join('\n')
   const secondary = company.secondaryServices.map((service) => `- ${service.name}: ${service.description}`).join('\n')
   const process = company.process.map((step) => `${step.step}. ${step.name}: ${step.description}`).join('\n')
@@ -48,7 +49,7 @@ export function GET() {
     headers: {
       'Content-Type': 'text/plain; charset=utf-8',
       'Cache-Control': 'no-store, max-age=0, must-revalidate',
-      'X-Robots-Tag': 'index, follow',
+      'X-Robots-Tag': isAlpha ? 'noindex, nofollow' : 'index, follow',
     },
   })
 }
