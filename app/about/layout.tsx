@@ -1,12 +1,12 @@
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'About Booth Marketing | Websites & Automation',
-  description: 'Booth Marketing builds conversion-focused websites and AI automation systems for established businesses.',
+  title: 'About Booth Marketing | AI Automation',
+  description: 'Booth Marketing helps established businesses identify repetitive work and implement practical AI automation.',
   alternates: { canonical: '/about' },
   openGraph: {
-    title: 'About Booth Marketing | Websites & Automation',
-    description: 'Conversion-focused websites and AI automation systems built around established businesses.',
+    title: 'About Booth Marketing | AI Automation',
+    description: 'Practical AI automation built around established businesses and their workflows.',
     url: '/about',
   },
 }
