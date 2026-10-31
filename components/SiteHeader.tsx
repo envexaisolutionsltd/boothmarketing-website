@@ -50,7 +50,7 @@ export default function SiteHeader() {
           role="dialog"
           aria-modal="true"
           aria-label="Site navigation"
-          className="booth-glass-menu absolute right-0 top-0 z-10 flex h-[100dvh] w-[75vw] min-w-[270px] max-w-[360px] flex-col border-l border-[#242424] p-5"
+          className="booth-glass-menu absolute right-0 top-0 z-10 flex h-[100dvh] w-[75vw] min-w-[270px] max-w-[360px] flex-col border-l border-[#242424] p-5 text-[#f3f3f3]"
           style={{
             borderColor: 'rgba(255,255,255,.18)',
             background: 'linear-gradient(150deg,rgba(255,255,255,.09),rgba(255,255,255,.018) 52%),rgba(15,15,15,.96)',
