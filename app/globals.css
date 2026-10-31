@@ -272,3 +272,101 @@ button,a { -webkit-tap-highlight-color: transparent; }
   .booth-public .booth-primary,.booth-public .booth-secondary { transition:none; }
   .booth-public .booth-primary:hover,.booth-public .booth-secondary:hover { transform:none; }
 }
+
+
+/* Expanded liquid glass treatment for alpha's public site. */
+.booth-public header.booth-glass-header {
+  border-color:transparent;
+  background:transparent;
+  box-shadow:none;
+  -webkit-backdrop-filter:none;
+  backdrop-filter:none;
+}
+.booth-public .booth-glass-bar {
+  position:relative;
+  margin:10px auto;
+  width:calc(100% - 28px);
+  min-height:64px;
+  border:1px solid rgba(255,255,255,.19);
+  border-radius:18px;
+  background:
+    radial-gradient(ellipse at 18% 0%,rgba(255,255,255,.12),transparent 42%),
+    linear-gradient(150deg,rgba(255,255,255,.085),rgba(255,255,255,.018) 48%),
+    rgba(17,17,17,.68);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.2),inset 0 -1px 0 rgba(255,255,255,.035),0 14px 38px rgba(0,0,0,.32);
+}
+@supports (backdrop-filter:blur(1px)) {
+  .booth-public .booth-glass-bar {
+    -webkit-backdrop-filter:blur(28px) saturate(155%);
+    backdrop-filter:blur(28px) saturate(155%);
+  }
+}
+.booth-public .booth-hero {
+  isolation:isolate;
+  background:
+    radial-gradient(ellipse at 78% 32%,rgba(217,47,60,.11),transparent 29%),
+    radial-gradient(ellipse at 52% 0%,rgba(255,255,255,.055),transparent 43%),
+    #080808;
+}
+.booth-public .booth-hero::before {
+  content:'';
+  position:absolute;
+  z-index:-1;
+  inset:0;
+  pointer-events:none;
+  background:linear-gradient(115deg,transparent 24%,rgba(255,255,255,.025) 46%,transparent 67%);
+}
+.booth-public .booth-hero-badge {
+  display:inline-flex;
+  align-items:center;
+  gap:9px;
+  min-height:34px;
+  padding:0 13px;
+  border:1px solid rgba(255,255,255,.16);
+  border-radius:999px;
+  background:linear-gradient(145deg,rgba(255,255,255,.11),rgba(255,255,255,.025)),rgba(20,20,20,.58);
+  color:#c9c9c9;
+  font:500 9px/1.2 ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;
+  letter-spacing:.11em;
+  text-transform:uppercase;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.16),0 8px 26px rgba(0,0,0,.2);
+  -webkit-backdrop-filter:blur(14px) saturate(135%);
+  backdrop-filter:blur(14px) saturate(135%);
+}
+.booth-public .booth-hero-badge::before {
+  content:'';
+  width:6px;
+  height:6px;
+  border-radius:50%;
+  background:var(--booth-red);
+  box-shadow:0 0 12px rgba(217,47,60,.75);
+}
+.booth-public .booth-panel,
+.booth-public [class~="gap-px"] > div,
+.booth-public [class~="lg:grid-cols-3"] > article,
+.booth-public [class~="md:grid-cols-3"] > article {
+  border-color:rgba(255,255,255,.22);
+  background:
+    radial-gradient(ellipse at 12% 0%,rgba(255,255,255,.1),transparent 46%),
+    linear-gradient(145deg,rgba(255,255,255,.08),rgba(255,255,255,.018) 42%,transparent 75%),
+    linear-gradient(320deg,rgba(217,47,60,.055),transparent 62%),
+    rgba(19,19,19,.78);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.17),inset 1px 0 0 rgba(255,255,255,.055),0 22px 56px rgba(0,0,0,.3);
+}
+.booth-public .booth-panel:hover,
+.booth-public [class~="gap-px"] > div:hover,
+.booth-public [class~="lg:grid-cols-3"] > article:hover,
+.booth-public [class~="md:grid-cols-3"] > article:hover {
+  border-color:rgba(255,255,255,.3);
+}
+@media (max-width:767px) {
+  .booth-public .booth-glass-bar { width:calc(100% - 20px); margin:7px auto; min-height:60px; border-radius:15px; }
+  .booth-public .booth-hero { background:radial-gradient(ellipse at 84% 25%,rgba(217,47,60,.09),transparent 32%),#080808; }
+  .booth-public .booth-panel,
+  .booth-public [class~="gap-px"] > div,
+  .booth-public [class~="lg:grid-cols-3"] > article,
+  .booth-public [class~="md:grid-cols-3"] > article { background:linear-gradient(145deg,rgba(255,255,255,.08),rgba(255,255,255,.018) 48%),rgba(19,19,19,.88); }
+}
+@media (prefers-contrast:more) {
+  .booth-public .booth-glass-bar,.booth-public .booth-hero-badge { background:#101010; border-color:#888; -webkit-backdrop-filter:none; backdrop-filter:none; }
+}
